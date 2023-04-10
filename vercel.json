@@ -1,6 +1,6 @@
 {
     "version":2,
-    "name":"stackoverflow-data",
+    "name":"ChitChatz",
     "builds" : [
         {
             "src": "./index.js",
