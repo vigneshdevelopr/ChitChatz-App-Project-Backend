@@ -16,6 +16,9 @@ app.use(express.json());
 app.use("/api/auth", userRouter);
 app.use("/api/messages/", MsgRouter);
 
+
+
+
 //callback of dbconnection:
 createConnection();
 
@@ -26,7 +29,7 @@ const server = app.listen(PORT, () => {
 
 const io = new Server(server, {
   cors: {
-    origin: "https://chitchatzapp.netlify.app",
+    origin: "http://localhost:3000",
     credentials: true,
   },
 });
