@@ -53,6 +53,20 @@ console.log(users,token)
     }
     
     }
+
+    //========find all the users========================================================
+
+export const AllUsers = async(req, res) =>{
+
+try {
+    const allusers = await User.find();
+    return res.status(200).json({allusers}) 
+} catch (error) {
+    return res.status(500).json({message: error.message});
+}
+}
+
+
     //================================================================
 
     export const Friends = async(req, res)=>{
