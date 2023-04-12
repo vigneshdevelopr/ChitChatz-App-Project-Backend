@@ -1,6 +1,8 @@
-import { User } from "../Model/User.js";
+import { User, generateAuthToken } from "../Model/User.js";
 import bcrypt from 'bcrypt';
 
+
+//Signup : 
 export const signup = async(req, res)=>{
 try {
     const {firstName, lastName, email, password} = req.body;
@@ -13,14 +15,19 @@ if(MailChk){
   return res.json({message: "Email already exists, Please enter a valid email", status: false})
 }
 //password hashing:
-const hashPassword = await bcrypt.hash(password, 10)
+const salt = await bcrypt.genSalt(10);
+
+const hashPassword = await bcrypt.hash(password, salt)
 const user = await User.create({
     firstName, 
     lastName, 
     email,
     password: hashPassword,
 })
-return res.json({user, status: true});
+
+const token =  generateAuthToken(user._id);
+
+return res.json({user, status: true,token});
 } catch (error) {
     return res.json({message: error.message, status: false});
 }
@@ -38,8 +45,9 @@ export const Login = async(req, res)=>{
     if(!PassChk){
         return res.json({message: "Invalid Credentials", status: false})
     }
-     
-    return res.json({users, status: true});
+    const token =  generateAuthToken(users._id)
+console.log(users,token)
+    return res.json({users, status: true,token});
     } catch (error) {
         return res.json({message: error.message, status: false});
     }
