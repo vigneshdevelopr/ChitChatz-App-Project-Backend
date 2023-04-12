@@ -28,11 +28,15 @@ const server = app.listen(PORT, () => {
 });
 
 const io = new Server(server, {
-  cors: {
+    cors: {
     origin: "*",
     methods: ["GET", "POST"],
     credentials: true,
   },
+  allowRequest: (req, callback) => {
+    const noOriginHeader = req.headers.origin === undefined;
+    callback(null, noOriginHeader);
+  }
 });
 
 global.onlineUsers = new Map();
