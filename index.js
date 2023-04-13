@@ -28,15 +28,10 @@ const server = app.listen(PORT, () => {
 });
 
 const io = new Server(server, {
-    cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
-  allowRequest: (req, callback) => {
-    const noOriginHeader = req.headers.origin === undefined;
-    callback(null, noOriginHeader);
-  }
+  pingTimeout:60000,
+    cors:{
+        origin: "http://localhost:3000"
+    },
 });
 
 global.onlineUsers = new Map();
@@ -49,8 +44,8 @@ io.on("connection", (socket) => {
     console.log("send-msg", { data });
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-receive", data.message);
-      console.log(data.message);
+      socket.to(sendUserSocket).emit("msg-receive", data.msg);
+      console.log(data.msg);
     }
   });
 });
