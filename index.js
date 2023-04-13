@@ -26,6 +26,7 @@ createConnection();
 const server = app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
+//socket listening on port
 
 const io = new Server(server, {
   pingTimeout:60000,
