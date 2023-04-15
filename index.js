@@ -81,6 +81,11 @@ app.get("/", (req,res)=>{
   res.status(200).send("ChitChatz Application Ready to Use 📩")
 })
 
+app.get('/cors', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.send({ "msg": "This has CORS enabled 🎈" })
+  })
+
 // Create HTTP server
 const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
