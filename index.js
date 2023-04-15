@@ -77,6 +77,10 @@ app.use("/api/messages/", MsgRouter);
 // Callback of dbconnection:
 createConnection();
 
+app.get("/", (req,res)=>{
+  res.status(200).send("ChitChatz Application Ready to Use 📩")
+})
+
 // Create HTTP server
 const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
