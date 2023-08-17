@@ -12,6 +12,7 @@ const corsOrigin ={
   origin:'*', 
   credentials:true,            
   optionSuccessStatus:200,
+Headers: "Content-Type",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
     transports: ["websocket", 'polling'],
@@ -23,6 +24,12 @@ const PORT = process.env.PORT;
 
 // Middleware
 app.use(cors(corsOrigin));
+app.use((req, res, next) => {
+  return res.setHeader("Access-Control-Allow-Origin", "*");
+  return res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  return res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+})
 app.use(express.json());
 app.use("/api/auth", userRouter);
 app.use("/api/messages/", MsgRouter);
