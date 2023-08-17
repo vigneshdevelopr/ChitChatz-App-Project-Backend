@@ -8,12 +8,17 @@ import { MsgRouter } from "./Routes/Messages.js";
 import { Server } from "socket.io";
 
 dotenv.config();
+const corsOrigin ={
+  origin:'*', 
+  credentials:true,            
+  optionSuccessStatus:200
+}
 
 const app = express();
 const PORT = process.env.PORT;
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOrigin));
 app.use(express.json());
 app.use("/api/auth", userRouter);
 app.use("/api/messages/", MsgRouter);
@@ -47,15 +52,14 @@ const server = app.listen(PORT, () => {
 // Create WebSocket server
 const io = new Server(server, {
   pingTimeout: 60000,
-  cors: {
-    origin: true,
-    // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    // preflightContinue: false,
-    // optionsSuccessStatus: 204,
-    credentials: true,
-    // transports: ["websocket", "polling"],
-  },
-  allowEIO3: true
+  // cors: {
+  //   origin: true,
+  //   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  //   preflightContinue: false,
+  //   optionsSuccessStatus: 204,
+  //   credentials: true,
+  //   transports: ["websocket", "polling"],
+  // },
 });
 
 
