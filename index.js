@@ -24,14 +24,14 @@ const PORT = process.env.PORT;
 
 // Middleware
 app.use(
-  cors({
-    origin: "https://chitchatzapp.netlify.app",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: "Content-Type",
-    preflightContinue: false,
-    credentials: true,
-    optionsSuccessStatus: 200,
-  })
+  // cors({
+  //   origin: "https://chitchatzapp.netlify.app",
+  //   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  //   allowedHeaders: "Content-Type",
+  //   preflightContinue: false,
+  //   credentials: true,
+  //   optionsSuccessStatus: 200,
+  // })
 );
 // app.use((req, res, next) => {
 //    res.setHeader("Access-Control-Allow-Origin", "*");
