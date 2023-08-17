@@ -25,9 +25,9 @@ const PORT = process.env.PORT;
 // Middleware
 app.use(cors(corsOrigin));
 app.use((req, res, next) => {
-  return res.setHeader("Access-Control-Allow-Origin", "*");
-  return res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-  return res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+   res.setHeader("Access-Control-Allow-Origin", "*");
+   res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 })
 app.use(express.json());
