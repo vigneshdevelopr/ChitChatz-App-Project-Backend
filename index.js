@@ -30,20 +30,33 @@ const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
+// // Create WebSocket server
+// const io = new Server(server, {
+//   pingTimeout: 60000,
+//   cors: {
+//     origin: "https://chitchatzapp.netlify.app",
+    
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//     preflightContinue: false,
+//     optionsSuccessStatus: 204,
+//     credentials: true,
+//     transports: ["websocket", 'polling'],
+
+//   },
+// });
 // Create WebSocket server
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://chitchatzapp.netlify.app/",
-    
+    origin: "https://chitchatzapp.netlify.app",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
     optionsSuccessStatus: 204,
     credentials: true,
-    transports: ["websocket", 'polling'],
-
+    transports: ["websocket", "polling"],
   },
 });
+
 
 // Store online users in a Map
 const onlineUsers = new Map();
