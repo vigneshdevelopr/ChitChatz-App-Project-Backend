@@ -72,15 +72,22 @@ const server = app.listen(PORT, () => {
 // Create WebSocket server
 const io = new Server(server, {
   pingTimeout: 60000,
+  // cors: {
+  //   origin: true,
+  //   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  //   allowedHeaders: "Content-Type",
+  //   preflightContinue: false,
+  //   optionsSuccessStatus: 200,
+    
+  //   credentials: true,
+  //   transports: ["websocket", "polling"],
+  // },
   cors: {
-    origin: true,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: "Content-Type",
-    preflightContinue: false,
-    optionsSuccessStatus: 200,
-    credentials: true,
-    transports: ["websocket", "polling"],
-  },
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+  }
 });
 
 // Store online users in a Map
