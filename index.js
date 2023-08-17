@@ -11,7 +11,11 @@ dotenv.config();
 const corsOrigin ={
   origin:'*', 
   credentials:true,            
-  optionSuccessStatus:200
+  optionSuccessStatus:200,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    transports: ["websocket", 'polling'],
+
 }
 
 const app = express();
