@@ -37,7 +37,7 @@ const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    preflightContinue: false,
+    preflightContinue: true,
     optionsSuccessStatus: 204,
   },
 });
