@@ -11,6 +11,7 @@ import http from "http";
 dotenv.config();
 
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT;
 
 // Middleware
@@ -33,14 +34,7 @@ const serverConfig = (req, res) => {
 const server = http.createServer(serverConfig);
 
 // // Create WebSocket server
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    preflightContinue: true,
-    optionsSuccessStatus: 204,
-  },
-});
+const io = new Server(server);
 
 // Store online users in a Map
 const onlineUsers = new Map();
