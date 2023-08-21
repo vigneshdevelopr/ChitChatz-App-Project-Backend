@@ -6,39 +6,16 @@ import { createConnection } from "./dbconnect.js";
 import { userRouter } from "./Routes/User.js";
 import { MsgRouter } from "./Routes/Messages.js";
 import { Server } from "socket.io";
+import http from 'http';
+
 
 dotenv.config();
-// const corsOrigin ={
-//   origin:'*',
-//   credentials:true,
-//   optionSuccessStatus:200,
-// Headers: "Content-Type",
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//     preflightContinue: false,
-//     transports: ["websocket", 'polling'],
 
-// }
 
 const app = express();
 const PORT = process.env.PORT;
 
 // Middleware
-app.use(
-  // cors({
-  //   origin: "https://chitchatzapp.netlify.app",
-  //   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  //   allowedHeaders: "Content-Type",
-  //   preflightContinue: false,
-  //   credentials: true,
-  //   optionsSuccessStatus: 200,
-  // })
-);
-// app.use((req, res, next) => {
-//    res.setHeader("Access-Control-Allow-Origin", "*");
-//    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-//    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//   next();
-// })
 app.use(express.json());
 app.use("/api/auth", userRouter);
 app.use("/api/messages/", MsgRouter);
@@ -51,43 +28,22 @@ app.get("/", (req, res) => {
 });
 
 // Create HTTP server
-const server = app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+
+const serverConfig = (req,res) =>{
+return res.status(200).send("This is your Node.js Server Configuration")
+}
+const server = http.createServer(serverConfig)
 
 // // Create WebSocket server
-// const io = new Server(server, {
-//   pingTimeout: 60000,
-//   cors: {
-//     origin: "https://chitchatzapp.netlify.app",
-
-//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//     preflightContinue: false,
-//     optionsSuccessStatus: 204,
-//     credentials: true,
-//     transports: ["websocket", 'polling'],
-
-//   },
-// });
-// Create WebSocket server
-const io = new Server(server, {
-  pingTimeout: 60000,
-  allowRequest: (req, callback) => {
-    const noOriginHeader = req.headers.origin === undefined;
-    callback(null, noOriginHeader);
+const io =  new Server(server,{
+  cors:{
+    origin:'*',
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
   }
-  // cors: {
-  //   origin: true,
-  //   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  //   allowedHeaders: "Content-Type",
-  //   preflightContinue: false,
-  //   optionsSuccessStatus: 200,
-    
-  //   credentials: true,
-  //   transports: ["websocket", "polling"],
-  // },
-  
 });
+
 
 // Store online users in a Map
 const onlineUsers = new Map();
@@ -124,3 +80,12 @@ io.on("connection", (socket) => {
     }
   });
 });
+
+
+server.listen(process.env.PORT,(req,res)=>{
+  try {
+    console.log(`Your Port is running Successfully on ${PORT}`)
+  } catch (error) {
+    console.log("Internal Server Error", error.message);
+  }
+})
