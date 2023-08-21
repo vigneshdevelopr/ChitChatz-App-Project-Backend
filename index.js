@@ -6,11 +6,9 @@ import { createConnection } from "./dbconnect.js";
 import { userRouter } from "./Routes/User.js";
 import { MsgRouter } from "./Routes/Messages.js";
 import { Server } from "socket.io";
-import http from 'http';
-
+import http from "http";
 
 dotenv.config();
-
 
 const app = express();
 const PORT = process.env.PORT;
@@ -29,21 +27,20 @@ app.get("/", (req, res) => {
 
 // Create HTTP server
 
-const serverConfig = (req,res) =>{
-return res.status(200).send("This is your Node.js Server Configuration")
-}
-const server = http.createServer(serverConfig)
+const serverConfig = (req, res) => {
+  return res.status(200).send("This is your Node.js Server Configuration");
+};
+const server = http.createServer(serverConfig);
 
 // // Create WebSocket server
-const io =  new Server(server,{
-  cors:{
-    origin:'*',
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
-  }
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  },
 });
-
 
 // Store online users in a Map
 const onlineUsers = new Map();
@@ -81,11 +78,10 @@ io.on("connection", (socket) => {
   });
 });
 
-
-server.listen(process.env.PORT,(req,res)=>{
+server.listen(process.env.PORT, (req, res) => {
   try {
-    console.log(`Your Port is running Successfully on ${PORT}`)
+    console.log(`Your Port is running Successfully on ${PORT}`);
   } catch (error) {
     console.log("Internal Server Error", error.message);
   }
-})
+});
