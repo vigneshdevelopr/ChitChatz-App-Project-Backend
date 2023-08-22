@@ -42,7 +42,7 @@ const server = http.createServer(app)
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://chitchatzapp.netlify.app",
+    origin: "wss://chitchatzapp.netlify.app",
     // origin: "*",
     methods: ["GET", "POST"],
     credentials: true,
