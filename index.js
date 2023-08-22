@@ -32,18 +32,18 @@ app.get("/", (req, res) => {
 const server = http.createServer(app)
 
 
-const corsOptions ={
-  origin: "https://chitchatzapp.netlify.app",
-  // origin: "*",
-  methods: ["GET", "POST"],
-  credentials: true,
-  allowedHeaders: ["my-custom-header"],
-}
 
-app.use(cors(corsOptions));
 // // Create WebSocket server
 const io = new Server(server, {
-  transports: ["websocket", "polling"]
+  pingTimeout: 60000,
+  cors: {
+    origin: "https://chitchatzapp.netlify.app",
+    // origin: "*",
+    methods: ["GET", "POST"],
+    credentials: true,
+    allowedHeaders: ["my-custom-header"],
+  },
+  transports: ["websocket", "polling"], // Specify only the 'websocket' transport
 });
 
 
@@ -82,9 +82,8 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.emit("connection-successful");
+  socket.emit("connection-successful", { message: 'Hello from the server!' });
 });
-
 
 
 server.listen(process.env.PORT, () => {
