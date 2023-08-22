@@ -29,18 +29,27 @@ app.get("/", (req, res) => {
 // Create HTTP server
 
 const serverConfig = (req, res) => {
-  return res.status(200).send("This is your Node.js Server Configuration");
+  console.log("This is your Node.js Server Configuration");
 };
-const server = http.createServer(serverConfig);
-
+// const server = http.createServer(serverConfig);
+const server = app.listen(process.env.PORT, (req, res) => {
+  try {
+    console.log(`Your Port is running Successfully on ${PORT}`);
+  } catch (error) {
+    console.log("Internal Server Error", error.message);
+  }
+});
 // // Create WebSocket server
 const io = new Server(server, {
+  pingTimeout: 60000,
   cors: {
-    // origin: "https://chitchatzapp.netlify.app/",
-    origin: "http://localhost:3000",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
+    origin: "https://chitchatzapp.netlify.app",
+    // origin: "*",
+    methods: ["GET","POST"],
+    credentials:true,
+    allowedHeaders: ["my-custom-header"],
+
+   
     
   },
 });
@@ -81,10 +90,3 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(process.env.PORT, (req, res) => {
-  try {
-    console.log(`Your Port is running Successfully on ${PORT}`);
-  } catch (error) {
-    console.log("Internal Server Error", error.message);
-  }
-});
