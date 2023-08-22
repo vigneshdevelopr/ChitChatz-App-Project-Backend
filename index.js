@@ -11,7 +11,6 @@ import http from "http";
 dotenv.config();
 
 const app = express();
-app.use(cors());
 const PORT = process.env.PORT;
 
 // Middleware
@@ -31,26 +30,22 @@ app.get("/", (req, res) => {
 
 // const server = http.createServer(serverConfig);
 const server = http.createServer(app)
- server.listen(process.env.PORT, (req, res) => {
-  try {
-    console.log(`Your Port is running Successfully on ${PORT}`);
-  } catch (error) {
-    console.log("Internal Server Error", error.message);
-  }
-});
+
+
+const corsOptions ={
+  origin: "https://chitchatzapp.netlify.app",
+  // origin: "*",
+  methods: ["GET", "POST"],
+  credentials: true,
+  allowedHeaders: ["my-custom-header"],
+}
+
+app.use(cors(corsOptions));
 // // Create WebSocket server
 const io = new Server(server, {
-  pingTimeout: 60000,
-  cors: {
-    origin: "wss://chitchatzapp.netlify.app",
-    // origin: "*",
-    methods: ["GET", "POST"],
-    credentials: true,
-    allowedHeaders: ["my-custom-header"],
-    transports: ["websocket", "polling"], // Specify only the 'websocket' transport
-
-  },
+  transports: ["websocket", "polling"]
 });
+
 
 // Store online users in a Map
 const onlineUsers = new Map();
@@ -88,4 +83,14 @@ io.on("connection", (socket) => {
   });
 
   socket.emit("connection-successful");
+});
+
+
+
+server.listen(process.env.PORT, () => {
+  try {
+    console.log(`Your Port is running Successfully on ${PORT}`);
+  } catch (error) {
+    console.log("Internal Server Error", error.message);
+  }
 });
