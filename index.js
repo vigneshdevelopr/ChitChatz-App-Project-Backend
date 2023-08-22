@@ -91,5 +91,8 @@ io.on("connection", (socket) => {
       }
     }
   });
+
+  socket.emit("connection-successful");
+
 });
 
