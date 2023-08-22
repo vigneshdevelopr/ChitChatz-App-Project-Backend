@@ -47,8 +47,9 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     credentials: true,
     allowedHeaders: ["my-custom-header"],
+    transports: ["websocket", "polling"], // Specify only the 'websocket' transport
+
   },
-  transports: ["websocket", "polling"], // Specify only the 'websocket' transport
 });
 
 // Store online users in a Map
