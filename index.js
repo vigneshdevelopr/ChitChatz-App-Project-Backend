@@ -28,11 +28,10 @@ app.get("/", (req, res) => {
 
 // Create HTTP server
 
-const serverConfig = (req, res) => {
-  console.log("This is your Node.js Server Configuration");
-};
+
 // const server = http.createServer(serverConfig);
-const server = app.listen(process.env.PORT, (req, res) => {
+const server = http.createServer(app)
+ server.listen(process.env.PORT, (req, res) => {
   try {
     console.log(`Your Port is running Successfully on ${PORT}`);
   } catch (error) {
@@ -45,16 +44,11 @@ const io = new Server(server, {
   cors: {
     origin: "https://chitchatzapp.netlify.app",
     // origin: "*",
-    methods: ["GET","POST"],
-    credentials:true,
-    allowedHeaders: ["my-custom-header"], 
-
-
-   
-    
+    methods: ["GET", "POST"],
+    credentials: true,
+    allowedHeaders: ["my-custom-header"],
   },
-  transports: ["websocket","polling"], // Specify only the 'websocket' transport
-
+  transports: ["websocket", "polling"], // Specify only the 'websocket' transport
 });
 
 // Store online users in a Map
@@ -93,6 +87,4 @@ io.on("connection", (socket) => {
   });
 
   socket.emit("connection-successful");
-
 });
-
