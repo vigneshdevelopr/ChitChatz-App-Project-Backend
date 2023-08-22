@@ -53,7 +53,7 @@ const io = new Server(server, {
    
     
   },
-  transports: ["websocket"], // Specify only the 'websocket' transport
+  transports: ["websocket","polling"], // Specify only the 'websocket' transport
 
 });
 
