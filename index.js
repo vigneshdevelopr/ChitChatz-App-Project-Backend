@@ -47,11 +47,14 @@ const io = new Server(server, {
     // origin: "*",
     methods: ["GET","POST"],
     credentials:true,
-    allowedHeaders: ["my-custom-header"],
+    allowedHeaders: ["my-custom-header"], 
+
 
    
     
   },
+  transports: ["websocket"], // Specify only the 'websocket' transport
+
 });
 
 // Store online users in a Map
