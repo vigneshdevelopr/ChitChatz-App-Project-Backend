@@ -36,7 +36,8 @@ const server = http.createServer(serverConfig);
 // // Create WebSocket server
 const io = new Server(server, {
   cors: {
-    origin: "https://chitchatzapp.netlify.app/",
+    // origin: "https://chitchatzapp.netlify.app/",
+    origin: "http://localhost:3000",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     
   },
