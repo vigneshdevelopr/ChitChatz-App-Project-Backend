@@ -53,10 +53,9 @@ const io = new Server(server, {
    
     
   },
+  transports: ["websocket","polling"], // Specify only the 'websocket' transport
 
 });
-io.set('transports', ['websocket','polling']);
-
 
 // Store online users in a Map
 const onlineUsers = new Map();
