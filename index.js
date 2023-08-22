@@ -43,7 +43,7 @@ const server = app.listen(process.env.PORT, (req, res) => {
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "*",
+    origin: "https://chitchatzapp.netlify.app",
     // origin: "*",
     methods: ["GET","POST"],
     credentials:true,
